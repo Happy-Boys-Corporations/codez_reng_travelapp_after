@@ -1,212 +1,173 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.*;
-import java.lang.*;
-import java.io.*;
-import java.nio.file.*;
-import java.time.*;
-import java.time.format.*;
+import java.io.IOException;
+import java.util.Objects;
 
 public class AdminAdd extends JFrame {
 
-    private Container c;
-    private ImageIcon icon;
-    private JLabel label1;
-    private Font f1, f2, f3, f4, f5, f6;
-    private JTextField tf1, tf2, tf4;
-    private JComboBox securityQsn;
-    private JButton btn1, btn2, nBtn;
-    private JPasswordField tf3;
-    private Cursor cursor;
+    private final JTextField userNameField;
+    private final JTextField emailField;
+    private final JPasswordField passwordField;
+    private final JComboBox<String> securityQuestionComboBox;
+    private final JTextField answerField;
+
+    private static final Color BACKGROUND_COLOR = Color.decode("#F2F2F2");
+    private static final Color BUTTON_COLOR = Color.decode("#2E75B6");
+    private static final Font TITLE_FONT = new Font("Segoe UI Black", Font.PLAIN, 35);
+    private static final Font BUTTON_FONT = new Font("Segoe UI Black", Font.PLAIN, 25);
+    private static final Font LABEL_FONT = new Font("Segoe UI", Font.PLAIN, 25);
+    private static final Font FIELD_FONT = new Font("Segoe UI", Font.PLAIN, 19);
 
     AdminAdd() {
         // Frame Layout
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // This frame should not exit the app, but rather be disposed on close.
+        // The UserData frame will handle closing or going back.
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(510, 400);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
-        c = this.getContentPane();
+        Container c = this.getContentPane();
         c.setLayout(null);
-        c.setBackground(Color.decode("#F2F2F2"));
+        c.setBackground(BACKGROUND_COLOR);
 
         // Icon
-        icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Fonts
-        f1 = new Font("Segoe UI Black", Font.PLAIN, 35);
-        f2 = new Font("Segoe UI Black", Font.PLAIN, 25);
-        f3 = new Font("Segoe UI Semibold", Font.PLAIN, 35);
-        f4 = new Font("Segoe UI", Font.PLAIN, 25);
-        f5 = new Font("Segoe UI", Font.PLAIN, 19);
-        f6 = new Font("Segoe UI", Font.PLAIN, 25);
-
         // Title
-        label1 = new JLabel();
-        label1.setText("Enter Information");
-        label1.setBounds(100, 25, 500, 50);
-        label1.setFont(f1);
-        c.add(label1);
+        JLabel titleLabel = new JLabel();
+        titleLabel.setText("Enter Information");
+        titleLabel.setBounds(100, 25, 500, 50);
+        titleLabel.setFont(TITLE_FONT);
+        c.add(titleLabel);
 
         // User Name
-        label1 = new JLabel();
-        label1.setText("User Name");
-        label1.setBounds(45, 75, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel userNameLabel = new JLabel();
+        userNameLabel.setText("User Name");
+        userNameLabel.setBounds(45, 75, 500, 50);
+        userNameLabel.setFont(LABEL_FONT);
+        c.add(userNameLabel);
 
-        tf1 = new JTextField();
-        tf1.setBounds(185, 85, 260, 30);
-        tf1.setFont(f5);
-        c.add(tf1);
+        userNameField = new JTextField();
+        userNameField.setBounds(185, 85, 260, 30);
+        userNameField.setFont(FIELD_FONT);
+        c.add(userNameField);
 
         // Email
-        label1 = new JLabel();
-        label1.setText("Email");
-        label1.setBounds(45, 110, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel emailLabel = new JLabel();
+        emailLabel.setText("Email");
+        emailLabel.setBounds(45, 110, 500, 50);
+        emailLabel.setFont(LABEL_FONT);
+        c.add(emailLabel);
 
-        tf2 = new JTextField();
-        tf2.setBounds(185, 120, 260, 30);
-        tf2.setFont(f5);
-        c.add(tf2);
+        emailField = new JTextField();
+        emailField.setBounds(185, 120, 260, 30);
+        emailField.setFont(FIELD_FONT);
+        c.add(emailField);
 
         // Password
-        label1 = new JLabel();
-        label1.setText("Password");
-        label1.setBounds(45, 145, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel passwordLabel = new JLabel();
+        passwordLabel.setText("Password");
+        passwordLabel.setBounds(45, 145, 500, 50);
+        passwordLabel.setFont(LABEL_FONT);
+        c.add(passwordLabel);
 
-        tf3 = new JPasswordField();
-        tf3.setBounds(185, 155, 260, 30);
-        tf3.setFont(f2);
-        tf3.setEchoChar('*');
-        c.add(tf3);
+        passwordField = new JPasswordField();
+        passwordField.setBounds(185, 155, 260, 30);
+        passwordField.setFont(FIELD_FONT);
+        passwordField.setEchoChar('*');
+        c.add(passwordField);
 
         // Question
-        label1 = new JLabel();
-        label1.setText("Question");
-        label1.setBounds(45, 180, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel questionLabel = new JLabel();
+        questionLabel.setText("Question");
+        questionLabel.setBounds(45, 180, 500, 50);
+        questionLabel.setFont(LABEL_FONT);
+        c.add(questionLabel);
 
         String[] secQsn = { "Choose a Security Question...", "Your dream job?", "Your favorite song?",
                 "First pet's name?", "Your favorite hobby?" };
-        securityQsn = new JComboBox(secQsn);
-        securityQsn.setBounds(185, 190, 259, 30);
-        securityQsn.setSelectedIndex(0);
-        securityQsn.setFont(f5);
-        securityQsn.setBackground(Color.white);
-        c.add(securityQsn);
+        securityQuestionComboBox = new JComboBox<>(secQsn);
+        securityQuestionComboBox.setBounds(185, 190, 259, 30);
+        securityQuestionComboBox.setSelectedIndex(0);
+        securityQuestionComboBox.setFont(FIELD_FONT);
+        securityQuestionComboBox.setBackground(Color.white);
+        c.add(securityQuestionComboBox);
 
         // Answer
-        label1 = new JLabel();
-        label1.setText("Answer");
-        label1.setBounds(45, 215, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel answerLabel = new JLabel();
+        answerLabel.setText("Answer");
+        answerLabel.setBounds(45, 215, 500, 50);
+        answerLabel.setFont(LABEL_FONT);
+        c.add(answerLabel);
 
-        tf4 = new JTextField();
-        tf4.setBounds(185, 225, 260, 30);
-        tf4.setFont(f5);
-        c.add(tf4);
+        answerField = new JTextField();
+        answerField.setBounds(185, 225, 260, 30);
+        answerField.setFont(FIELD_FONT);
+        c.add(answerField);
 
         // Cursor for JButtons
-        cursor = new Cursor(Cursor.HAND_CURSOR);
+        Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
         // JButtons
-        btn1 = new JButton("Back");
-        btn1.setBounds(51, 280, 183, 50);
-        btn1.setFont(f2);
-        btn1.setCursor(cursor);
-        btn1.setForeground(Color.WHITE);
-        btn1.setBackground(Color.decode("#2E75B6"));
-        c.add(btn1);
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(51, 280, 183, 50);
+        backButton.setFont(BUTTON_FONT);
+        backButton.setCursor(cursor);
+        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(BUTTON_COLOR);
+        c.add(backButton);
 
-        btn2 = new JButton("Add");
-        btn2.setBounds(260, 280, 183, 50);
-        btn2.setFont(f2);
-        btn2.setCursor(cursor);
-        btn2.setForeground(Color.WHITE);
-        btn2.setBackground(Color.decode("#2E75B6"));
-        c.add(btn2);
-
-        nBtn = new JButton("");
-        nBtn.setBounds(0, 0, 0, 0);
-        c.add(nBtn);
+        JButton addButton = new JButton("Add");
+        addButton.setBounds(260, 280, 183, 50);
+        addButton.setFont(BUTTON_FONT);
+        addButton.setCursor(cursor);
+        addButton.setForeground(Color.WHITE);
+        addButton.setBackground(BUTTON_COLOR);
+        c.add(addButton);
 
         // Back Button
-        btn1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                setVisible(false);
-                UserData frame = new UserData();
-                frame.setVisible(true);
-            }
+        backButton.addActionListener(ae -> {
+            setVisible(false);
+            new UserData().setVisible(true);
+            dispose();
         });
 
-        // Register Button
-        btn2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
+        // Add Button
+        addButton.addActionListener(ae -> {
+            String userName = userNameField.getText().toLowerCase();
+            String email = emailField.getText();
+            String password = new String(passwordField.getPassword());
+            String answer = answerField.getText();
+            String question = String.valueOf(securityQuestionComboBox.getSelectedItem());
 
-                String textField1 = tf1.getText().toLowerCase(); // User Name
-                String textField2 = tf2.getText(); // Email
-                String textField3 = tf3.getText(); // Password
-                String textField4 = tf4.getText(); // Security Question Answer
-                String secQsn = String.valueOf(securityQsn.getSelectedItem()); // Security Question
+            if (userName.isEmpty() || email.isEmpty() || password.isEmpty() || answer.isEmpty()
+                    || (securityQuestionComboBox.getSelectedIndex() == 0)) {
+                JOptionPane.showMessageDialog(null, "Please fill all of the fields.", "Warning!",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-                if (textField1.isEmpty() || textField2.isEmpty() || textField3.isEmpty() || textField4.isEmpty()
-                        || ((securityQsn.getSelectedIndex()) == 0)) {
-                    JOptionPane.showMessageDialog(null, "Please fill all of the fields.", "Warning!",
-                            JOptionPane.WARNING_MESSAGE);
-                } else {
-
-                    try {
-                        File file = new File(".\\Data\\user_data.txt");
-                        if (!file.exists()) {
-                            file.createNewFile();
-                        }
-                        FileWriter fw = new FileWriter(file, true);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        PrintWriter pw = new PrintWriter(bw);
-
-                        LocalDateTime myDateObj = LocalDateTime.now();
-                        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm a, dd/MM/yyyy");
-
-                        String timeAndDate = myDateObj.format(myFormatObj);
-
-                        pw.println("             ## Added by Admin ##");
-                        pw.println("User Name : " + textField1);
-                        pw.println("Password : " + textField3);
-                        pw.println("Email : " + textField2);
-                        pw.println("Security Question : " + secQsn);
-                        pw.println("Answer : " + textField4);
-                        pw.println("Time & Date : " + timeAndDate);
-                        pw.println("===============================================");
-                        pw.close();
-
-                    } catch (Exception ex) {
-                        System.out.print(ex);
-                    }
-
-                    JOptionPane.showMessageDialog(null, "User has been added.", "User Added",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    setVisible(false);
-                    AdminAdd frame = new AdminAdd();
-                    frame.setVisible(true);
-                }
+            try {
+                AuthService.addUserByAdmin(userName, password, email, question, answer);
+                JOptionPane.showMessageDialog(null, "User has been added.", "User Added",
+                        JOptionPane.INFORMATION_MESSAGE);
+                // Go back to the user list, which should be refreshed.
+                setVisible(false);
+                new UserData().setVisible(true);
+                dispose();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Could not write to user data file.", "File Error",
+                        JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
             }
         });
     }
 
     public static void main(String[] args) {
-
-        AdminAdd frame = new AdminAdd();
-        frame.setVisible(true);
+        SwingUtilities.invokeLater(() -> new AdminAdd().setVisible(true));
     }
 }

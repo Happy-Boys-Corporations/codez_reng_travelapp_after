@@ -1,10 +1,15 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Objects;
 import javax.swing.*;
+import java.awt.*;
+import java.util.List;
+import java.util.Objects;
 
-public class DomesticCoxsBazar extends JFrame {
+/**
+ * A reusable frame to display package details for any destination.
+ * This single class replaces the 10+ duplicated Domestic... and International... classes.
+ */
+public class PackageDetailsFrame extends JFrame {
 
+    // --- UI Constants ---
     private static final Color BACKGROUND_COLOR = Color.decode("#F2F2F2");
     private static final Color BUTTON_COLOR = Color.decode("#2E75B6");
     private static final Color EXIT_BUTTON_COLOR = Color.decode("#C00000");
@@ -19,10 +24,15 @@ public class DomesticCoxsBazar extends JFrame {
 
     private PackageSelection selectedPackage = PackageSelection.NONE;
 
-    DomesticCoxsBazar() {
-        // Frame Layout
+    /**
+     * Constructs the details frame based on the provided Destination data.
+     * @param destination The data object containing all info about the destination and its packages.
+     * @param previousFrame The frame to return to when 'Back' is clicked.
+     */
+    public PackageDetailsFrame(Destination destination, JFrame previousFrame) {
+        // --- Frame Setup ---
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setTitle("Travel Agency");
+        this.setTitle("Travel Agency - " + destination.getName());
         this.setSize(1000, 500);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -31,84 +41,66 @@ public class DomesticCoxsBazar extends JFrame {
         c.setLayout(null);
         c.setBackground(BACKGROUND_COLOR);
 
-        // Icon
+        // --- Common UI Elements ---
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Logo
         ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/LogoBlue.png")));
         JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 82, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Cursor for JButtons and Radio Buttons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // Title
-        JLabel titleLabel = new JLabel();
-        titleLabel.setText("3 Packs Available for Cox's Bazar");
+        // --- Dynamic Title ---
+        JLabel titleLabel = new JLabel("3 Packs Available for " + destination.getName());
         titleLabel.setBounds(430, 35, 600, 50);
         titleLabel.setFont(TITLE_FONT);
         c.add(titleLabel);
 
-        JLabel subtitleLabel = new JLabel();
-        subtitleLabel.setText("Tour! Select One : ");
+        JLabel subtitleLabel = new JLabel("Tour! Select One:");
         subtitleLabel.setBounds(430, 70, 500, 50);
         subtitleLabel.setFont(TITLE_FONT);
         c.add(subtitleLabel);
 
-        // Pack 1 Details
-        JRadioButton pack1 = new JRadioButton("Pack 1");
-        pack1.setBounds(430, 120, 100, 50);
-        pack1.setFont(RADIO_BUTTON_FONT);
-        pack1.setBackground(BACKGROUND_COLOR);
-        pack1.setCursor(cursor);
-        c.add(pack1);
-
-        addDetailLabel(c, "* First Class", 430, 150);
-        addDetailLabel(c, "* 5 Star Hotel", 430, 180);
-        addDetailLabel(c, "* By Car", 430, 210);
-        addDetailLabel(c, "* 5 Persons", 430, 240);
-        addDetailLabel(c, "* 6 Days", 430, 270);
-        addDetailLabel(c, "* Cost : $300", 430, 300);
-
-        // Pack 2 Details
-        JRadioButton pack2 = new JRadioButton("Pack 2");
-        pack2.setBounds(610, 120, 100, 50);
-        pack2.setFont(RADIO_BUTTON_FONT);
-        pack2.setBackground(BACKGROUND_COLOR);
-        pack2.setCursor(cursor);
-        c.add(pack2);
-
-        addDetailLabel(c, "* Second Class", 610, 150);
-        addDetailLabel(c, "* 3 Star Hotel", 610, 180);
-        addDetailLabel(c, "* By Bus", 610, 210);
-        addDetailLabel(c, "* 4 Persons", 610, 240);
-        addDetailLabel(c, "* 4 Days", 610, 270);
-        addDetailLabel(c, "* Cost : $200", 610, 300);
-
-        // Pack 3 Details
-        JRadioButton pack3 = new JRadioButton("Pack 3");
-        pack3.setBounds(790, 120, 500, 50);
-        pack3.setFont(RADIO_BUTTON_FONT);
-        pack3.setBackground(BACKGROUND_COLOR);
-        pack3.setCursor(cursor);
-        c.add(pack3);
-
-        addDetailLabel(c, "* Third Class", 790, 150);
-        addDetailLabel(c, "* 2 Star Hotel", 790, 180);
-        addDetailLabel(c, "* By Train", 790, 210);
-        addDetailLabel(c, "* 4 Persons", 790, 240);
-        addDetailLabel(c, "* 3 Days", 790, 270);
-        addDetailLabel(c, "* Cost : $150", 790, 300);
-
-        // To group the radio buttons.
+        // --- Dynamic Package Details ---
         ButtonGroup radioButtonGroup = new ButtonGroup();
-        radioButtonGroup.add(pack1);
-        radioButtonGroup.add(pack2);
-        radioButtonGroup.add(pack3);
+        List<PackageInfo> packages = destination.getPackages();
 
-        // JButtons
+        // We assume there are always 3 packages.
+        // The starting X coordinates for each package column.
+        int[] xCoordinates = {430, 610, 790};
+
+        for (int i = 0; i < packages.size(); i++) {
+            PackageInfo pkg = packages.get(i);
+            int x = xCoordinates[i];
+
+            // Radio Button
+            JRadioButton packRadio = new JRadioButton(pkg.getName());
+            packRadio.setBounds(x, 120, 150, 50); // Increased width for longer names
+            packRadio.setFont(RADIO_BUTTON_FONT);
+            packRadio.setBackground(BACKGROUND_COLOR);
+            packRadio.setCursor(cursor);
+            c.add(packRadio);
+            radioButtonGroup.add(packRadio);
+
+            // Add action listener to update selection
+            final int packageIndex = i;
+            packRadio.addActionListener(e -> selectedPackage = PackageSelection.values()[packageIndex + 1]);
+
+            // Feature Labels
+            int y = 150;
+            for (String feature : pkg.getFeatures()) {
+                addDetailLabel(c, feature, x, y);
+                y += 30; // Increment y for the next label
+            }
+
+            // Cost Label
+            String costText = "* Cost : " + destination.getCurrencySymbol() + pkg.getCost();
+            addDetailLabel(c, costText, x, y);
+        }
+
+        // --- Action Buttons ---
         JButton exitButton = new JButton("Exit");
         exitButton.setBounds(148, 375, 215, 50);
         exitButton.setFont(ACTION_BUTTON_FONT);
@@ -133,30 +125,21 @@ public class DomesticCoxsBazar extends JFrame {
         nextButton.setBackground(BUTTON_COLOR);
         c.add(nextButton);
 
-        // Radio button action listeners
-        pack1.addActionListener(e -> selectedPackage = PackageSelection.PACK_1);
-        pack2.addActionListener(e -> selectedPackage = PackageSelection.PACK_2);
-        pack3.addActionListener(e -> selectedPackage = PackageSelection.PACK_3);
-
-        // Action Listener for JButtons
-        // Exit Button
+        // --- Button Actions ---
         exitButton.addActionListener(ae -> System.exit(0));
 
-        // Back Button
         backButton.addActionListener(ae -> {
             setVisible(false);
-            new DomPlaces().setVisible(true);
+            previousFrame.setVisible(true);
             dispose();
         });
 
-        // Next Button
         nextButton.addActionListener(ae -> {
             if (selectedPackage == PackageSelection.NONE) {
-                JOptionPane.showMessageDialog(null, "You did not select any package.", "Warning!",
-                        JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "You did not select any package.", "Warning!", JOptionPane.WARNING_MESSAGE);
             } else {
                 setVisible(false);
-                new Payment().setVisible(true);
+                new Payment().setVisible(true); // Assuming Payment is the next step for all
                 dispose();
             }
         });
@@ -167,9 +150,5 @@ public class DomesticCoxsBazar extends JFrame {
         label.setBounds(x, y, 520, 50);
         label.setFont(DETAIL_FONT);
         container.add(label);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new DomesticCoxsBazar().setVisible(true));
     }
 }

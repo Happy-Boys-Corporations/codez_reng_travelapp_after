@@ -4,12 +4,11 @@ import java.awt.event.*;
 
 public class Contribution extends JFrame {
 
-    private Container c;
-    private ImageIcon icon, logo, welcome;
-    private JLabel imgLabel;
-    private Font f1;
-    private JButton btn1, btn2, nBtn;
-    private Cursor cursor;
+    private final Container c;
+    private final ImageIcon icon;
+    private final Font f1;
+    private final JButton btn1;
+    private final Cursor cursor;
 
     Contribution() {
         // Frame Layout
@@ -27,8 +26,8 @@ public class Contribution extends JFrame {
         this.setIconImage(icon.getImage());
 
         // Logo and Images
-        logo = new ImageIcon(getClass().getResource("/images/Contribution.png"));
-        imgLabel = new JLabel(logo);
+        ImageIcon logo = new ImageIcon(getClass().getResource("/images/Contribution.png"));
+        JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(45, 20, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
         
@@ -46,10 +45,6 @@ public class Contribution extends JFrame {
         btn1.setForeground(Color.WHITE);
         btn1.setBackground(Color.decode("#2E75B6"));
         c.add(btn1);
-
-        nBtn = new JButton("");
-        nBtn.setBounds(0, 0, 0, 0);
-        c.add(nBtn);
 
         // Action Listener for JButtons
         // OK Button

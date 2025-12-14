@@ -123,8 +123,6 @@ public class Home extends JFrame {
                 setVisible(false);
                 AdminLogin frame = new AdminLogin();
                 frame.setVisible(true);
-                JOptionPane.showMessageDialog(null, "By default, Admin Name and Password is : 'admin'", "Information!",
-                                JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
