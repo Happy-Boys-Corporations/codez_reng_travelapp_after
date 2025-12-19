@@ -13,7 +13,6 @@ public class PaySuccess extends JFrame {
     private Cursor cursor;
 
     PaySuccess() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -24,21 +23,17 @@ public class PaySuccess extends JFrame {
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
         icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(icon.getImage());
 
-        // Logo
         logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
         imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 82, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Fonts
         f1 = new Font("Segoe UI Black", Font.PLAIN, 35);
         f2 = new Font("Segoe UI Black", Font.PLAIN, 25);
 
-        // Title
         label1 = new JLabel();
         label1.setText("Your Payment Has");
         label1.setBounds(430, 80, 500, 50);
@@ -57,7 +52,6 @@ public class PaySuccess extends JFrame {
         label1.setFont(f1);
         c.add(label1);
         
-        // Cursor for JButtons
         cursor = new Cursor(Cursor.HAND_CURSOR);
 
         btn1 = new JButton("Finish");

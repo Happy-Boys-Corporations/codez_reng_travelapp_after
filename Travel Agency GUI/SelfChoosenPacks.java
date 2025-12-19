@@ -1,8 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.*;
-import java.lang.*;
 
 public class SelfChoosenPacks extends JFrame {
 
@@ -15,7 +13,6 @@ public class SelfChoosenPacks extends JFrame {
     private Cursor cursor;
 
     SelfChoosenPacks() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 480);
@@ -26,17 +23,14 @@ public class SelfChoosenPacks extends JFrame {
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
         icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(icon.getImage());
 
-        // Logo
         logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
         imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 65, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Fonts
         f1 = new Font("Segoe UI Black", Font.PLAIN, 35);
         f2 = new Font("Segoe UI Black", Font.PLAIN, 25);
         f3 = new Font("Segoe UI Semibold", Font.PLAIN, 35);
@@ -44,17 +38,14 @@ public class SelfChoosenPacks extends JFrame {
         f5 = new Font("Segoe UI", Font.PLAIN, 19);
         f6 = new Font("Segoe UI", Font.PLAIN, 25);
 
-        // Cursor for JButtons
         cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // Title
         label1 = new JLabel();
         label1.setText("Select Tour Details");
         label1.setBounds(430, 25, 500, 50);
         label1.setFont(f1);
         c.add(label1);
 
-        // Tour Type
         label1 = new JLabel();
         label1.setText("Tour Type");
         label1.setBounds(430, 75, 500, 50);
@@ -69,7 +60,6 @@ public class SelfChoosenPacks extends JFrame {
         cb1.setBackground(Color.WHITE);
         c.add(cb1);
 
-        // Country
         label0 = new JLabel();
         label0.setText("Destination");
         label0.setBounds(430, 110, 500, 50);
@@ -85,7 +75,6 @@ public class SelfChoosenPacks extends JFrame {
         cb2.disable();
         c.add(cb2);
 
-        // Person
         label1 = new JLabel();
         label1.setText("Person");
         label1.setBounds(430, 145, 500, 50);
@@ -100,7 +89,6 @@ public class SelfChoosenPacks extends JFrame {
         cb3.setBackground(Color.WHITE);
         c.add(cb3);
 
-        // Days
         label1 = new JLabel();
         label1.setText("Total Days");
         label1.setBounds(430, 180, 500, 50);
@@ -115,7 +103,6 @@ public class SelfChoosenPacks extends JFrame {
         cb4.setBackground(Color.WHITE);
         c.add(cb4);
 
-        // Hotel
         label1 = new JLabel();
         label1.setText("Hotel Type");
         label1.setBounds(430, 215, 500, 50);
@@ -131,7 +118,6 @@ public class SelfChoosenPacks extends JFrame {
         cb5.disable();
         c.add(cb5);
 
-        // Travel By
         label1 = new JLabel();
         label1.setText("Travel By");
         label1.setBounds(430, 250, 500, 50);
@@ -147,7 +133,6 @@ public class SelfChoosenPacks extends JFrame {
         cb6.disable();
         c.add(cb6);
 
-        // Vehicle Type
         label1 = new JLabel();
         label1.setText("Vehicle Type");
         label1.setBounds(430, 285, 500, 50);
@@ -163,7 +148,6 @@ public class SelfChoosenPacks extends JFrame {
         cb7.disable();
         c.add(cb7);
 
-        // JButtons
         btn1 = new JButton("Exit");
         btn1.setBounds(53, 355, 183, 50);
         btn1.setFont(f2);
@@ -302,14 +286,12 @@ public class SelfChoosenPacks extends JFrame {
             }
         });
 
-        // Exit Button
         btn1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 System.exit(0);
             }
         });
 
-        // Back Button
         btn2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 setVisible(false);
@@ -318,7 +300,6 @@ public class SelfChoosenPacks extends JFrame {
             }
         });
 
-        // Reset Button
         btn4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 setVisible(false);
@@ -327,7 +308,6 @@ public class SelfChoosenPacks extends JFrame {
             }
         });
 
-        // Next Button
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if ((cb1.getSelectedIndex()) == 0) {

@@ -1,110 +1,91 @@
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.io.*;
 import java.nio.file.*;
-import java.lang.*;
 
 public class UserData extends JFrame {
 
-    private Container c;
-    private ImageIcon icon;
-    private JLabel label1;
-    private Font f1, f2, f3;
-    private JScrollPane scroll;
-    private JTable table;
-    private DefaultTableModel model;
-    private JButton btn1, btn2, btn3, btn4, btn5, nBtn;
-    private Cursor cursor;
+    private final JTable table;
+    private final DefaultTableModel model;
 
-    private String[] column = { "User Name", "Password", "Email", "Security Question", "Answer", "Date and Time" };
-    private String[] rows = new String[7];
+    private static final String[] COLUMN_NAMES = { "User Name", "Password", "Email", "Security Question", "Answer", "Date and Time" };
 
     UserData() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(700, 600);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
-        c = this.getContentPane();
+        Container c = this.getContentPane();
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
-        icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Fonts
-        f1 = new Font("Segoe UI Black", Font.BOLD, 60);
-        f2 = new Font("Segoe UI Black", Font.PLAIN, 25);
-        f3 = new Font("Segoe UI", Font.PLAIN, 20);
+        Font titleFont = new Font("Segoe UI Black", Font.BOLD, 60);
+        Font buttonFont = new Font("Segoe UI Black", Font.PLAIN, 25);
+        Font tableFont = new Font("Segoe UI", Font.PLAIN, 20);
 
-        // Cursor for JButtons
-        cursor = new Cursor(Cursor.HAND_CURSOR);
+        Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // Title
-        label1 = new JLabel();
-        label1.setText("User Data");
-        label1.setBounds(200, 10, 400, 80);
-        label1.setFont(f1);
-        c.add(label1);
+        JLabel titleLabel = new JLabel();
+        titleLabel.setText("User Data");
+        titleLabel.setBounds(200, 10, 400, 80);
+        titleLabel.setFont(titleFont);
+        c.add(titleLabel);
 
-        // JButtons
-        btn1 = new JButton("Refresh");
-        btn1.setBounds(54, 418, 184, 50);
-        btn1.setFont(f2);
-        btn1.setCursor(cursor);
-        btn1.setForeground(Color.WHITE);
-        btn1.setBackground(Color.decode("#2E75B6"));
-        c.add(btn1);
+        JButton refreshButton = new JButton("Refresh");
+        refreshButton.setBounds(54, 418, 184, 50);
+        refreshButton.setFont(buttonFont);
+        refreshButton.setCursor(cursor);
+        refreshButton.setForeground(Color.WHITE);
+        refreshButton.setBackground(Color.decode("#2E75B6"));
+        c.add(refreshButton);
 
-        btn2 = new JButton("Delete");
-        btn2.setBounds(248, 418, 184, 50);
-        btn2.setFont(f2);
-        btn2.setCursor(cursor);
-        btn2.setForeground(Color.WHITE);
-        btn2.setBackground(Color.decode("#2E75B6"));
-        c.add(btn2);
+        JButton deleteButton = new JButton("Delete");
+        deleteButton.setBounds(248, 418, 184, 50);
+        deleteButton.setFont(buttonFont);
+        deleteButton.setCursor(cursor);
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setBackground(Color.decode("#2E75B6"));
+        c.add(deleteButton);
 
-        btn3 = new JButton("Add");
-        btn3.setBounds(442, 418, 184, 50);
-        btn3.setFont(f2);
-        btn3.setCursor(cursor);
-        btn3.setForeground(Color.WHITE);
-        btn3.setBackground(Color.decode("#2E75B6"));
-        c.add(btn3);
+        JButton addButton = new JButton("Add");
+        addButton.setBounds(442, 418, 184, 50);
+        addButton.setFont(buttonFont);
+        addButton.setCursor(cursor);
+        addButton.setForeground(Color.WHITE);
+        addButton.setBackground(Color.decode("#2E75B6"));
+        c.add(addButton);
 
-        btn4 = new JButton("Exit");
-        btn4.setBounds(54, 480, 278, 50);
-        btn4.setFont(f2);
-        btn4.setCursor(cursor);
-        btn4.setForeground(Color.WHITE);
-        btn4.setBackground(Color.decode("#C00000"));
-        c.add(btn4);
+        JButton exitButton = new JButton("Exit");
+        exitButton.setBounds(54, 480, 278, 50);
+        exitButton.setFont(buttonFont);
+        exitButton.setCursor(cursor);
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(Color.decode("#C00000"));
+        c.add(exitButton);
 
-        btn5 = new JButton("Back");
-        btn5.setBounds(342, 480, 284, 50);
-        btn5.setFont(f2);
-        btn5.setCursor(cursor);
-        btn5.setForeground(Color.WHITE);
-        btn5.setBackground(Color.decode("#2E75B6"));
-        c.add(btn5);
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(342, 480, 284, 50);
+        backButton.setFont(buttonFont);
+        backButton.setCursor(cursor);
+        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(Color.decode("#2E75B6"));
+        c.add(backButton);
 
-        nBtn = new JButton("");
-        nBtn.setBounds(0, 0, 0, 0);
-        c.add(nBtn);
-
-        // JTable Layout
         table = new JTable();
         model = new DefaultTableModel();
-        model.setColumnIdentifiers(column);
+        model.setColumnIdentifiers(COLUMN_NAMES);
 
         table.setModel(model);
-        table.setFont(f3);
+        table.setFont(tableFont);
         table.setSelectionBackground(Color.decode("#8AC5FF"));
         table.setBackground(Color.WHITE);
         table.setRowHeight(30);
@@ -116,168 +97,183 @@ public class UserData extends JFrame {
         table.getColumnModel().getColumn(4).setPreferredWidth(200);
         table.getColumnModel().getColumn(5).setPreferredWidth(220);
 
-        scroll = new JScrollPane(table);
+        JScrollPane scroll = new JScrollPane(table);
         scroll.setBounds(53, 96, 578, 300);
         scroll.setBackground(Color.WHITE);
         c.add(scroll);
 
-        String file = ".\\Data\\user_data.txt";
-        String temp = ".\\Data\\temp.txt";
+        loadUsersIntoTable();
 
-        // To input data in the table
-        try {
+        refreshButton.addActionListener(ae -> refreshTable());
 
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            int totalLines = 0;
-            while (reader.readLine() != null)
-                totalLines++;
-            reader.close();
+        deleteButton.addActionListener(ae -> {
+            if (table.getSelectionModel().isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please select a user to delete", "Warning!",
+                        JOptionPane.WARNING_MESSAGE);
+            } else {
+                int selectedRow = table.getSelectedRow();
+                String userToDelete = table.getModel().getValueAt(selectedRow, 0).toString();
 
-            for (int i = 0; i < totalLines; i++) {
-                String line = Files.readAllLines(Paths.get(file)).get(i);
-                String x = line.substring(0, 4);
-                if (x.equals("User")) {
-                    rows[0] = Files.readAllLines(Paths.get(file)).get(i).substring(12); // User Name
-                    rows[1] = Files.readAllLines(Paths.get(file)).get((i + 1)).substring(11); // Password
-                    rows[2] = Files.readAllLines(Paths.get(file)).get((i + 2)).substring(8); // Email
-                    rows[3] = Files.readAllLines(Paths.get(file)).get((i + 3)).substring(20); // Security Question
-                    rows[4] = Files.readAllLines(Paths.get(file)).get((i + 4)).substring(9); // Answer
-                    rows[5] = Files.readAllLines(Paths.get(file)).get((i + 5)).substring(14); // Date and Time
-                    model.addRow(rows);
+                int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete user '" + userToDelete + "'?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION) {
+                    try {
+                        UserDataManager.deleteUser(selectedRow);
+                        model.removeRow(selectedRow);
+                        JOptionPane.showMessageDialog(null, "User '" + userToDelete + "' has been deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Error deleting user.", "File Error", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    }
                 }
             }
-
-        } catch (Exception ex) {
-            return;
-        }
-
-        // Refresh Button
-        btn1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                setVisible(false);
-                UserData frame = new UserData();
-                frame.setVisible(true);
-
-            }
         });
 
-        // Delete Button
-        btn2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                if (table.getSelectionModel().isSelectionEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Please select a user to delete", "Warning!",
-                            JOptionPane.WARNING_MESSAGE);
-                } else {
-                    String removeUser = table.getModel().getValueAt(table.getSelectedRow(), 0).toString();
-
-                    File oldFile = new File(file);
-                    File newFile = new File(temp);
-
-                    int q = 0;
-
-                    try {
-
-                        BufferedReader reader = new BufferedReader(new FileReader(file));
-                        int totalLines = 0;
-                        while (reader.readLine() != null)
-                            totalLines++;
-                        reader.close();
-
-                        for (int i = 0; i < totalLines; i++) {
-                            String line = Files.readAllLines(Paths.get(file)).get(i);
-                            String x = line.substring(0, 4);
-                            if (x.equals("User")) {
-                                String userName = Files.readAllLines(Paths.get(file)).get(i);
-                                if (userName.substring(12).equals(removeUser)) {
-                                    q = i;
-                                }
-                            }
-                        }
-                    } catch (Exception ex) {
-                        return;
-                    }
-
-                    try {
-
-                        FileWriter fw = new FileWriter(temp, true);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        PrintWriter pw = new PrintWriter(bw);
-
-                        FileReader fr = new FileReader(file);
-                        BufferedReader br = new BufferedReader(fr);
-
-                        BufferedReader reader = new BufferedReader(new FileReader(file));
-                        int totalLines = 0;
-                        while (reader.readLine() != null)
-                            totalLines++;
-                        reader.close();
-
-                        for (int j = 0; j < totalLines; j++) {
-                            String line = Files.readAllLines(Paths.get(file)).get(j);
-                            String x = line.substring(0, 4);
-
-                            if (q != 0 && (j == q || j == (q + 1) || j == (q + 2) || j == (q + 3) || j == (q + 4) || j == (q + 5))) {
-                                String userName = Files.readAllLines(Paths.get(file)).get(j);
-                                pw.println("#Removed! " + userName);
-                            } else {
-                                String userName = Files.readAllLines(Paths.get(file)).get(j);
-                                pw.println(userName);
-                            }
-                        }
-                        pw.flush();
-                        pw.close();
-                        fr.close();
-                        br.close();
-                        bw.close();
-                        fw.close();
-
-                    } catch (Exception ex) {
-                        System.out.print(ex);
-                    }
-
-                    oldFile.delete();
-                    File dump = new File(file);
-                    newFile.renameTo(dump);
-
-                    setVisible(false);
-                    UserData frame = new UserData();
-                    frame.setVisible(true);
-                }
-
-            }
+        addButton.addActionListener(ae -> {
+            setVisible(false);
+            new AdminAdd().setVisible(true);
+            dispose();
         });
 
-        // Add Button
-        btn3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                setVisible(false);
-                AdminAdd frame = new AdminAdd();
-                frame.setVisible(true);
-            }
-        });
+        exitButton.addActionListener(ae -> System.exit(0));
 
-        // Exit Button
-        btn4.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                System.exit(0);
-            }
-        });
-
-        // Back Button
-        btn5.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                setVisible(false);
-                Admin frame = new Admin();
-                frame.setVisible(true);
-            }
+        backButton.addActionListener(ae -> {
+            setVisible(false);
+            new Admin().setVisible(true);
+            dispose();
         });
     }
 
-    public static void main(String[] args) {
+    private void loadUsersIntoTable() {
+        try {
+            List<String[]> allUsers = UserDataManager.getAllUsers();
+            for (String[] userData : allUsers) {
+                model.addRow(userData);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Failed to load user data.", "File Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
 
-        UserData frame = new UserData();
-        frame.setVisible(true);
+    private void refreshTable() {
+        model.setRowCount(0); // Clear existing data
+        loadUsersIntoTable();
+    }
+
+    private static class UserDataManager {
+        private static class UserRecord {
+            final List<String> lines;
+            final String userName;
+
+            UserRecord(List<String> recordLines) {
+                this.lines = new ArrayList<>(recordLines);
+                this.userName = this.lines.stream()
+                        .filter(line -> line.startsWith(USER_PREFIX))
+                        .map(line -> line.substring(USER_PREFIX.length()))
+                        .findFirst()
+                        .orElse(null);
+            }
+
+            public String getUserName() {
+                return userName;
+            }
+
+            public String[] toTableRow() {
+                Map<String, String> userDataMap = new HashMap<>();
+                for (String line : lines) {
+                    String[] parts = line.split(" : ", 2);
+                    if (parts.length == 2) {
+                        userDataMap.put(parts[0].trim(), parts[1].trim());
+                    }
+                }
+                return new String[]{
+                        userDataMap.getOrDefault("User Name", ""), userDataMap.getOrDefault("Password", ""),
+                        userDataMap.getOrDefault("Email", ""), userDataMap.getOrDefault("Security Question", ""),
+                        userDataMap.getOrDefault("Answer", ""), userDataMap.getOrDefault("Time & Date", "")};
+            }
+        }
+
+        private static final Path USER_DATA_FILE = Paths.get("Data", "user_data.txt");
+        private static final String USER_PREFIX = "User Name : ";
+        private static final String PASS_PREFIX = "Password : ";
+        private static final String EMAIL_PREFIX = "Email : ";
+        private static final String QSN_PREFIX = "Security Question : ";
+        private static final String ANS_PREFIX = "Answer : ";
+        private static final String DATE_PREFIX = "Time & Date : ";
+        private static final String SEPARATOR = "===============================================";
+        private static final String FILE_HEADER_LINE_1 = "===============================================";
+        private static final String FILE_HEADER_LINE_2 = "====== ###  Travel Agency User Data  ### ======";
+        private static final String FILE_HEADER_LINE_3 = "===============================================";
+
+        private static List<UserRecord> readAllRecords() throws IOException {
+            List<UserRecord> records = new ArrayList<>();
+            if (!Files.exists(USER_DATA_FILE)) {
+                return records;
+            }
+
+            List<String> allLines = Files.readAllLines(USER_DATA_FILE);
+            List<String> currentRecordLines = new ArrayList<>();
+
+            // Skip the file header if it exists
+            int startLine = 0;
+            if (allLines.size() >= 3 && allLines.get(0).equals(FILE_HEADER_LINE_1) && allLines.get(1).equals(FILE_HEADER_LINE_2) && allLines.get(2).equals(FILE_HEADER_LINE_3)) {
+                startLine = 3;
+            }
+
+            for (int i = startLine; i < allLines.size(); i++) {
+                String line = allLines.get(i);
+                if (line.equals(SEPARATOR)) {
+                    if (!currentRecordLines.isEmpty()) {
+                        records.add(new UserRecord(currentRecordLines));
+                        currentRecordLines = new ArrayList<>();
+                    }
+                } else {
+                    currentRecordLines.add(line);
+                }
+            }
+            // Add the last record if file doesn't end with a separator
+            if (!currentRecordLines.isEmpty()) {
+                records.add(new UserRecord(currentRecordLines));
+            }
+            return records;
+        }
+
+        private static void writeAllRecords(List<UserRecord> records) throws IOException {
+            try (BufferedWriter writer = Files.newBufferedWriter(USER_DATA_FILE)) {
+                // Write header
+                writer.write(FILE_HEADER_LINE_1);
+                writer.newLine();
+                writer.write(FILE_HEADER_LINE_2);
+                writer.newLine();
+                writer.write(FILE_HEADER_LINE_3);
+                writer.newLine();
+
+                // Write records
+                for (UserRecord record : records) {
+                    for (String line : record.lines) {
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                    writer.write(SEPARATOR);
+                    writer.newLine();
+                }
+            }
+        }
+
+        public static List<String[]> getAllUsers() throws IOException {
+            return readAllRecords().stream().map(UserRecord::toTableRow).collect(Collectors.toList());
+        }
+
+        public static void deleteUser(int index) throws IOException {
+            List<UserRecord> allRecords = readAllRecords();
+            if (index >= 0 && index < allRecords.size()) {
+                allRecords.remove(index);
+                writeAllRecords(allRecords);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new UserData().setVisible(true));
     }
 }

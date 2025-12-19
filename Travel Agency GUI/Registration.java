@@ -1,288 +1,236 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.*;
-import java.lang.*;
-import java.io.*;
-import java.nio.file.*;
-import java.time.*;
-import java.time.format.*;
+import java.util.Random;
+import java.util.Objects;
+import java.io.IOException;
 
 public class Registration extends JFrame {
 
-    private Container c;
-    private ImageIcon icon, logo;
-    private JLabel label1, imgLabel;
-    private Font f1, f2, f3, f4, f5, f6;
-    private JTextField tf1, tf2, tf4, tf5;
-    private JComboBox securityQsn;
-    private JButton btn1, btn2, btn3, btn4, nBtn;
-    private JPasswordField tf3;
-    private Cursor cursor;
-    private int a, b;
+    private final JTextField userNameField;
+    private final JTextField emailField;
+    private final JPasswordField passwordField;
+    private final JComboBox<String> securityQuestionComboBox;
+    private final JTextField answerField;
+    private final JTextField captchaField;
+
+    private final int captchaA;
+    private final int captchaB;
+
+    private static final Color BACKGROUND_COLOR = Color.decode("#F2F2F2");
+    private static final Color BUTTON_COLOR = Color.decode("#2E75B6");
+    private static final Color EXIT_BUTTON_COLOR = Color.decode("#C00000");
+    private static final Color CAPTCHA_BG_COLOR = Color.decode("#FFD3D3");
+
+    private static final Font TITLE_FONT = new Font("Segoe UI Black", Font.PLAIN, 35);
+    private static final Font BUTTON_FONT = new Font("Segoe UI Black", Font.PLAIN, 25);
+    private static final Font LABEL_FONT = new Font("Segoe UI", Font.PLAIN, 25);
+    private static final Font FIELD_FONT = new Font("Segoe UI", Font.PLAIN, 19);
+    private static final Font CAPTCHA_FONT = new Font("Segoe UI", Font.PLAIN, 25);
 
     Registration() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
-        c = this.getContentPane();
+        Container c = this.getContentPane();
         c.setLayout(null);
-        c.setBackground(Color.decode("#F2F2F2"));
+        c.setBackground(BACKGROUND_COLOR);
 
-        // Icon
-        icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Logo
-        logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
-        imgLabel = new JLabel(logo);
+        ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/LogoBlue.png")));
+        JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 50, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Fonts
-        f1 = new Font("Segoe UI Black", Font.PLAIN, 35);
-        f2 = new Font("Segoe UI Black", Font.PLAIN, 25);
-        f3 = new Font("Segoe UI Semibold", Font.PLAIN, 35);
-        f4 = new Font("Segoe UI", Font.PLAIN, 25);
-        f5 = new Font("Segoe UI", Font.PLAIN, 19);
-        f6 = new Font("Segoe UI", Font.PLAIN, 25);
+        JLabel titleLabel = new JLabel();
+        titleLabel.setText("Enter Your Information");
+        titleLabel.setBounds(430, 25, 500, 50);
+        titleLabel.setFont(TITLE_FONT);
+        c.add(titleLabel);
 
-        // Title
-        label1 = new JLabel();
-        label1.setText("Enter Your Information");
-        label1.setBounds(430, 25, 500, 50);
-        label1.setFont(f1);
-        c.add(label1);
+        JLabel userNameLabel = new JLabel();
+        userNameLabel.setText("User Name");
+        userNameLabel.setBounds(430, 75, 500, 50);
+        userNameLabel.setFont(LABEL_FONT);
+        c.add(userNameLabel);
 
-        // User Name
-        label1 = new JLabel();
-        label1.setText("User Name");
-        label1.setBounds(430, 75, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        userNameField = new JTextField();
+        userNameField.setBounds(570, 85, 260, 30);
+        userNameField.setFont(FIELD_FONT);
+        c.add(userNameField);
 
-        tf1 = new JTextField();
-        tf1.setBounds(570, 85, 260, 30);
-        tf1.setFont(f5);
-        c.add(tf1);
+        JLabel emailLabel = new JLabel();
+        emailLabel.setText("Email");
+        emailLabel.setBounds(430, 110, 500, 50);
+        emailLabel.setFont(LABEL_FONT);
+        c.add(emailLabel);
 
-        // Email
-        label1 = new JLabel();
-        label1.setText("Email");
-        label1.setBounds(430, 110, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        emailField = new JTextField();
+        emailField.setBounds(570, 120, 260, 30);
+        emailField.setFont(FIELD_FONT);
+        c.add(emailField);
 
-        tf2 = new JTextField();
-        tf2.setBounds(570, 120, 260, 30);
-        tf2.setFont(f5);
-        c.add(tf2);
+        JLabel passwordLabel = new JLabel();
+        passwordLabel.setText("Password");
+        passwordLabel.setBounds(430, 145, 500, 50);
+        passwordLabel.setFont(LABEL_FONT);
+        c.add(passwordLabel);
 
-        // Password
-        label1 = new JLabel();
-        label1.setText("Password");
-        label1.setBounds(430, 145, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        passwordField = new JPasswordField();
+        passwordField.setBounds(570, 155, 260, 30);
+        passwordField.setFont(FIELD_FONT);
+        passwordField.setEchoChar('*');
+        c.add(passwordField);
 
-        tf3 = new JPasswordField();
-        tf3.setBounds(570, 155, 260, 30);
-        tf3.setFont(f2);
-        tf3.setEchoChar('*');
-        c.add(tf3);
-
-        // Question
-        label1 = new JLabel();
-        label1.setText("Question");
-        label1.setBounds(430, 180, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel questionLabel = new JLabel();
+        questionLabel.setText("Question");
+        questionLabel.setBounds(430, 180, 500, 50);
+        questionLabel.setFont(LABEL_FONT);
+        c.add(questionLabel);
 
         String[] secQsn = { "Choose a Security Question...", "Your dream job?", "Your favorite song?",
                 "First pet's name?", "Your favorite hobby?" };
-        securityQsn = new JComboBox(secQsn);
-        securityQsn.setBounds(570, 190, 259, 30);
-        securityQsn.setSelectedIndex(0);
-        securityQsn.setFont(f5);
-        securityQsn.setBackground(Color.white);
-        c.add(securityQsn);
+        securityQuestionComboBox = new JComboBox<>(secQsn);
+        securityQuestionComboBox.setBounds(570, 190, 259, 30);
+        securityQuestionComboBox.setSelectedIndex(0);
+        securityQuestionComboBox.setFont(FIELD_FONT);
+        securityQuestionComboBox.setBackground(Color.white);
+        c.add(securityQuestionComboBox);
 
-        // Answer
-        label1 = new JLabel();
-        label1.setText("Answer");
-        label1.setBounds(430, 215, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel answerLabel = new JLabel();
+        answerLabel.setText("Answer");
+        answerLabel.setBounds(430, 215, 500, 50);
+        answerLabel.setFont(LABEL_FONT);
+        c.add(answerLabel);
 
-        tf4 = new JTextField();
-        tf4.setBounds(570, 225, 260, 30);
-        tf4.setFont(f5);
-        c.add(tf4);
+        answerField = new JTextField();
+        answerField.setBounds(570, 225, 260, 30);
+        answerField.setFont(FIELD_FONT);
+        c.add(answerField);
 
-        // Captcha Label and Text Field
-        label1 = new JLabel();
-        label1.setText("Captcha");
-        label1.setBounds(430, 250, 500, 50);
-        label1.setFont(f4);
-        c.add(label1);
+        JLabel captchaLabel = new JLabel();
+        captchaLabel.setText("Captcha");
+        captchaLabel.setBounds(430, 250, 500, 50);
+        captchaLabel.setFont(LABEL_FONT);
+        c.add(captchaLabel);
 
-        tf5 = new JTextField();
-        tf5.setBounds(615, 260, 215, 30);
-        tf5.setFont(f5);
-        c.add(tf5);
+        captchaField = new JTextField();
+        captchaField.setBounds(615, 260, 215, 30);
+        captchaField.setFont(FIELD_FONT);
+        c.add(captchaField);
 
-        // To get a random number for captcha
         Random rand = new Random();
-        int a = rand.nextInt(10);
-        int b = rand.nextInt(10);
+        captchaA = rand.nextInt(10);
+        captchaB = rand.nextInt(10);
 
-        // Captcha
-        label1 = new JLabel();
-        label1.setText(" " + a + " + " + b + " ");
-        label1.setBounds(530, 260, 75, 30);
-        label1.setFont(f4);
-        label1.setForeground(Color.red);
-        label1.setBackground(Color.decode("#FFD3D3"));
-        label1.setOpaque(true);
-        c.add(label1);
+        JLabel captchaValueLabel = new JLabel();
+        captchaValueLabel.setText(" " + captchaA + " + " + captchaB + " ");
+        captchaValueLabel.setBounds(530, 260, 75, 30);
+        captchaValueLabel.setFont(CAPTCHA_FONT);
+        captchaValueLabel.setForeground(Color.red);
+        captchaValueLabel.setBackground(CAPTCHA_BG_COLOR);
+        captchaValueLabel.setOpaque(true);
+        c.add(captchaValueLabel);
 
-        // Cursor for JButtons
-        cursor = new Cursor(Cursor.HAND_CURSOR);
+        Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
-        btn1 = new JButton("Exit");
-        btn1.setBounds(53, 325, 183, 50);
-        btn1.setFont(f2);
-        btn1.setCursor(cursor);
-        btn1.setForeground(Color.WHITE);
-        btn1.setBackground(Color.decode("#C00000"));
-        c.add(btn1);
+        JButton exitButton = new JButton("Exit");
+        exitButton.setBounds(53, 325, 183, 50);
+        exitButton.setFont(BUTTON_FONT);
+        exitButton.setCursor(cursor);
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(EXIT_BUTTON_COLOR);
+        c.add(exitButton);
 
-        btn2 = new JButton("Back");
-        btn2.setBounds(251, 325, 183, 50);
-        btn2.setFont(f2);
-        btn2.setCursor(cursor);
-        btn2.setForeground(Color.WHITE);
-        btn2.setBackground(Color.decode("#2E75B6"));
-        c.add(btn2);
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(251, 325, 183, 50);
+        backButton.setFont(BUTTON_FONT);
+        backButton.setCursor(cursor);
+        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(BUTTON_COLOR);
+        c.add(backButton);
 
-        btn3 = new JButton("Reset");
-        btn3.setBounds(450, 325, 183, 50);
-        btn3.setFont(f2);
-        btn3.setCursor(cursor);
-        btn3.setForeground(Color.WHITE);
-        btn3.setBackground(Color.decode("#2E75B6"));
-        c.add(btn3);
+        JButton resetButton = new JButton("Reset");
+        resetButton.setBounds(450, 325, 183, 50);
+        resetButton.setFont(BUTTON_FONT);
+        resetButton.setCursor(cursor);
+        resetButton.setForeground(Color.WHITE);
+        resetButton.setBackground(BUTTON_COLOR);
+        c.add(resetButton);
 
-        btn4 = new JButton("Register");
-        btn4.setBounds(649, 325, 183, 50);
-        btn4.setFont(f2);
-        btn4.setCursor(cursor);
-        btn4.setForeground(Color.WHITE);
-        btn4.setBackground(Color.decode("#2E75B6"));
-        c.add(btn4);
+        JButton registerButton = new JButton("Register");
+        registerButton.setBounds(649, 325, 183, 50);
+        registerButton.setFont(BUTTON_FONT);
+        registerButton.setCursor(cursor);
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setBackground(BUTTON_COLOR);
+        c.add(registerButton);
 
-        nBtn = new JButton("");
-        nBtn.setBounds(0, 0, 0, 0);
-        c.add(nBtn);
+        exitButton.addActionListener(ae -> System.exit(0));
 
-        // Exit Button
-        btn1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                System.exit(0);
-            }
+        backButton.addActionListener(ae -> {
+            setVisible(false);
+            new Home().setVisible(true);
+            dispose();
         });
 
-        // Back Button
-        btn2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                setVisible(false);
-                Home frame = new Home();
-                frame.setVisible(true);
-            }
+        resetButton.addActionListener(ae -> {
+            userNameField.setText("");
+            emailField.setText("");
+            passwordField.setText("");
+            answerField.setText("");
+            captchaField.setText("");
+            securityQuestionComboBox.setSelectedIndex(0);
         });
 
-        // Reset Button
-        btn3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
+        registerButton.addActionListener(ae -> registerUser());
+    }
 
-                setVisible(false);
-                Registration frame = new Registration();
-                frame.setVisible(true);
+    private void registerUser() {
+        String userName = userNameField.getText().toLowerCase();
+        String email = emailField.getText();
+        String password = new String(passwordField.getPassword());
+        String answer = answerField.getText();
+        String captchaText = captchaField.getText();
+        String question = String.valueOf(securityQuestionComboBox.getSelectedItem());
+
+        if (userName.isEmpty() || email.isEmpty() || password.isEmpty() || answer.isEmpty() || captchaText.isEmpty()
+                || (securityQuestionComboBox.getSelectedIndex() == 0)) {
+            JOptionPane.showMessageDialog(this, "Please fill all of the fields.", "Warning!",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            int captchaResult = Integer.parseInt(captchaText);
+            if (captchaResult != (captchaA + captchaB)) {
+                JOptionPane.showMessageDialog(this, "Wrong Captcha.", "Warning!", JOptionPane.WARNING_MESSAGE);
+                return;
             }
-        });
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid Captcha. Please enter a number.", "Warning!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        // Register Button
-        btn4.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                String textField1 = tf1.getText().toLowerCase(); // User Name
-                String textField2 = tf2.getText(); // Email
-                String textField3 = tf3.getText(); // Password
-                String textField4 = tf4.getText(); // Security Question Answer
-                String textField5 = tf5.getText(); // Captcha
-                String secQsn = String.valueOf(securityQsn.getSelectedItem()); // Security Question
-                int result = 0;
-
-                if (textField5.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Please fill all of the fields.", "Warning!",
-                            JOptionPane.WARNING_MESSAGE);
-                } else {
-                    result = Integer.parseInt(tf5.getText());
-                    if (textField1.isEmpty() || textField2.isEmpty() || textField3.isEmpty() || textField4.isEmpty()
-                            || textField5.isEmpty() || ((securityQsn.getSelectedIndex()) == 0)) {
-                        JOptionPane.showMessageDialog(null, "Please fill all of the fields.", "Warning!",
-                                JOptionPane.WARNING_MESSAGE);
-                    } else if (result != (a + b)) {
-                        JOptionPane.showMessageDialog(null, "Wrong Captcha.", "Warning!", JOptionPane.WARNING_MESSAGE);
-                    } else {
-
-                        try {
-                            File file = new File(".\\Data\\user_data.txt");
-                            if (!file.exists()) {
-                                file.createNewFile();
-                            }
-                            FileWriter fw = new FileWriter(file, true);
-                            BufferedWriter bw = new BufferedWriter(fw);
-                            PrintWriter pw = new PrintWriter(bw);
-
-                            LocalDateTime myDateObj = LocalDateTime.now();
-                            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm a, dd/MM/yyyy");
-
-                            String timeAndDate = myDateObj.format(myFormatObj);
-
-                            pw.println("User Name : " + textField1);
-                            pw.println("Password : " + textField3);
-                            pw.println("Email : " + textField2);
-                            pw.println("Security Question : " + secQsn);
-                            pw.println("Answer : " + textField4);
-                            pw.println("Time & Date : " + timeAndDate);
-                            pw.println("===============================================");
-                            pw.close();
-
-                        } catch (Exception ex) {
-                            System.out.print(ex);
-                        }
-
-                        JOptionPane.showMessageDialog(null, "Registration Successfully Completed.",
-                                "Registration Complete", JOptionPane.WARNING_MESSAGE);
-                        setVisible(false);
-                        Home frame = new Home();
-                        frame.setVisible(true);
-                    }
-                }
-            }
-        });
+        try {
+            AuthService.registerUser(userName, password, email, question, answer);
+            JOptionPane.showMessageDialog(this, "Registration Successfully Completed.",
+                    "Registration Complete", JOptionPane.INFORMATION_MESSAGE);
+            setVisible(false);
+            new Home().setVisible(true);
+            dispose();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Could not save registration data.", "File Error",
+                    JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
-
-        Registration frame = new Registration();
-        frame.setVisible(true);
+        SwingUtilities.invokeLater(() -> new Registration().setVisible(true));
     }
 }

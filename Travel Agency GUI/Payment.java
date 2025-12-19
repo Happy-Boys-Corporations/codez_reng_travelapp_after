@@ -15,7 +15,6 @@ public class Payment extends JFrame {
     private Cursor cursor;
 
     Payment() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -26,11 +25,9 @@ public class Payment extends JFrame {
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
         icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(icon.getImage());
 
-        // Logo and Images
         logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
         imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 50, logo.getIconWidth(), logo.getIconHeight());
@@ -46,7 +43,6 @@ public class Payment extends JFrame {
         imgLabel.setBounds(705, 90, img2.getIconWidth(), img2.getIconHeight());
         c.add(imgLabel);
 
-        // Fonts
         f1 = new Font("Segoe UI Black", Font.PLAIN, 35);
         f2 = new Font("Segoe UI Semibold", Font.PLAIN, 25);
         f3 = new Font("Segoe UI", Font.PLAIN, 20);
@@ -54,7 +50,6 @@ public class Payment extends JFrame {
         f5 = new Font("Segoe UI Black", Font.PLAIN, 15);
         f6 = new Font("Segoe UI Black", Font.PLAIN, 25);
 
-        // Title
         label1 = new JLabel();
         label1.setText("Complete Your Payment");
         label1.setBounds(400, 20, 500, 50);
@@ -71,7 +66,6 @@ public class Payment extends JFrame {
         label2.setFont(f2);
         c.add(label2);
 
-        // Name On Card
         label3 = new JLabel("Name On Card");
         label3.setBounds(430, 180, 500, 50);
         label3.setFont(f3);
@@ -82,7 +76,6 @@ public class Payment extends JFrame {
         tf1.setFont(f4);
         c.add(tf1);
 
-        // Card Number
         label3 = new JLabel("Card Number");
         label3.setBounds(430, 220, 500, 50);
         label3.setFont(f3);
@@ -94,7 +87,6 @@ public class Payment extends JFrame {
         tf2.setHorizontalAlignment(JTextField.CENTER);
         c.add(tf2);
 
-        // Valid On
         label3 = new JLabel("Valid On");
         label3.setBounds(430, 260, 500, 50);
         label3.setFont(f3);
@@ -106,7 +98,6 @@ public class Payment extends JFrame {
         tf3.setHorizontalAlignment(JTextField.CENTER);
         c.add(tf3);
 
-        // CVV Code
         label3 = new JLabel("CVV Code");
         label3.setBounds(620, 260, 500, 50);
         label3.setFont(f3);
@@ -119,10 +110,8 @@ public class Payment extends JFrame {
         pf.setFont(f5);
         c.add(pf);
 
-        // Cursor for JButtons
         cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
         btn1 = new JButton("Exit");
         btn1.setBounds(75, 325, 190, 50);
         btn1.setFont(f6);
@@ -152,7 +141,6 @@ public class Payment extends JFrame {
         nBtn.setBounds(0, 0, 0, 0);
         c.add(nBtn);
 
-        // To limit characters
         tf1.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 if (tf1.getText().length() >= 10 )
@@ -181,14 +169,12 @@ public class Payment extends JFrame {
             }
         });
 
-        // Exit Button
         btn1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 System.exit(0);
             }
         });
 
-        // Confirm Payment Button
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 String nameOnCard = tf1.getText();

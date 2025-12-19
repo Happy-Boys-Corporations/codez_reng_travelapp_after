@@ -1,128 +1,125 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Objects;
 
 public class Admin extends JFrame {
 
-    private Container c;
-    private ImageIcon icon, logo;
-    private JLabel label1, imgLabel;
-    private Font f1, f2;
-    private JButton btn1, btn2, btn3, btn4, nBtn;
-    private Cursor cursor;
+    private static final Color BACKGROUND_COLOR = Color.decode("#F2F2F2");
+    private static final Color BUTTON_COLOR = Color.decode("#2E75B6");
+    private static final Color EXIT_BUTTON_COLOR = Color.decode("#C00000");
+    private static final Font TITLE_FONT = new Font("Tahoma", Font.BOLD, 60);
+    private static final Font BUTTON_FONT = new Font("Segoe UI Black", Font.PLAIN, 25);
+
+    private JButton userDataButton;
+    private JButton adminPasswordButton;
+    private JButton exitButton;
+    private JButton backButton;
 
     Admin() {
-        // Frame Layout
+        setupFrame();
+        initComponents();
+        layoutComponents();
+        addListeners();
+    }
+
+    private void setupFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(650, 700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
-        c = this.getContentPane();
-        c.setLayout(null);
-        c.setBackground(Color.decode("#F2F2F2"));
-
-        // Icon
-        icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
+        this.getContentPane().setBackground(BACKGROUND_COLOR);
+    }
 
-        // Logo
-        logo = new ImageIcon(getClass().getResource("/images/Admin.png"));
-        imgLabel = new JLabel(logo);
-        imgLabel.setBounds(127, 20, logo.getIconWidth(), logo.getIconHeight());
+    private void initComponents() {
+        Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+
+        userDataButton = new JButton("User Data");
+        userDataButton.setFont(BUTTON_FONT);
+        userDataButton.setCursor(cursor);
+        userDataButton.setForeground(Color.WHITE);
+        userDataButton.setBackground(BUTTON_COLOR);
+
+        adminPasswordButton = new JButton("Admin Password");
+        adminPasswordButton.setFont(BUTTON_FONT);
+        adminPasswordButton.setCursor(cursor);
+        adminPasswordButton.setForeground(Color.WHITE);
+        adminPasswordButton.setBackground(BUTTON_COLOR);
+
+        exitButton = new JButton("Exit");
+        exitButton.setFont(BUTTON_FONT);
+        exitButton.setCursor(cursor);
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBackground(EXIT_BUTTON_COLOR);
+
+        backButton = new JButton("Back");
+        backButton.setFont(BUTTON_FONT);
+        backButton.setCursor(cursor);
+        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(BUTTON_COLOR);
+    }
+
+    private void layoutComponents() {
+        Container c = this.getContentPane();
+        c.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Admin.png")));
+        JLabel imgLabel = new JLabel(logo);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         c.add(imgLabel);
 
-        // Fonts
-        f1 = new Font("Tahoma", Font.BOLD, 60);
-        f2 = new Font("Segoe UI Black", Font.PLAIN, 25);
+        JLabel titleLabel = new JLabel();
+        titleLabel.setText("Admin Panel");
+        titleLabel.setFont(TITLE_FONT);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gbc.gridy = 1;
+        c.add(titleLabel, gbc);
 
-        // Title
-        label1 = new JLabel();
-        label1.setText("Admin Panel");
-        label1.setBounds(123, 420, 433, 50);
-        label1.setFont(f1);
-        c.add(label1);
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        c.add(userDataButton, gbc);
 
-        // Cursor for JButtons
-        cursor = new Cursor(Cursor.HAND_CURSOR);
+        gbc.gridx = 1;
+        c.add(adminPasswordButton, gbc);
 
-        // JButtons
-        btn1 = new JButton("User Data");
-        btn1.setBounds(64, 510, 207, 50);
-        btn1.setFont(f2);
-        btn1.setCursor(cursor);
-        btn1.setForeground(Color.WHITE);
-        btn1.setBackground(Color.decode("#2E75B6"));
-        c.add(btn1);
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        c.add(exitButton, gbc);
 
-        btn2 = new JButton("Back");
-        btn2.setBounds(299, 581, 270, 50);
-        btn2.setFont(f2);
-        btn2.setCursor(cursor);
-        btn2.setForeground(Color.WHITE);
-        btn2.setBackground(Color.decode("#2E75B6"));
-        c.add(btn2);
+        gbc.gridx = 1;
+        c.add(backButton, gbc);
+    }
 
-        btn3 = new JButton("Exit");
-        btn3.setBounds(64, 581, 207, 50);
-        btn3.setFont(f2);
-        btn3.setCursor(cursor);
-        btn3.setForeground(Color.WHITE);
-        btn3.setBackground(Color.decode("#C00000"));
-        c.add(btn3);
-
-        btn4 = new JButton("Admin Password");
-        btn4.setBounds(299, 510, 270, 50);
-        btn4.setFont(f2);
-        btn4.setCursor(cursor);
-        btn4.setForeground(Color.WHITE);
-        btn4.setBackground(Color.decode("#2E75B6"));
-        c.add(btn4);
-        
-        nBtn = new JButton("");
-        nBtn.setBounds(0, 0, 0, 0);
-        c.add(nBtn);
-
-        // User Data
-        btn1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-
-                setVisible(false);
-                UserData frame = new UserData();
-                frame.setVisible(true);
-            }
+    private void addListeners() {
+        userDataButton.addActionListener(ae -> {
+            new UserData().setVisible(true);
+            setVisible(false);
+            dispose();
         });
 
-        // Exit Button
-        btn3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                System.exit(0);
-            }
+        exitButton.addActionListener(ae -> System.exit(0));
+
+        backButton.addActionListener(ae -> {
+            new Home().setVisible(true);
+            setVisible(false);
+            dispose();
         });
 
-        // Back
-        btn2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                
-                setVisible(false);
-                Home frame = new Home();
-                frame.setVisible(true);
-            }
-        });
-
-        // Admin Password
-        btn4.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                AdminPassword frame = new AdminPassword();
-                frame.setVisible(true);
-            }
-        });
+        adminPasswordButton.addActionListener(ae -> new AdminPassword().setVisible(true));
     }
 
     public static void main(String[] args) {
-
-        Admin frame = new Admin();
-        frame.setVisible(true);
+        SwingUtilities.invokeLater(() -> new Admin().setVisible(true));
     }
 }
