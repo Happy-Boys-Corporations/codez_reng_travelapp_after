@@ -1,8 +1,5 @@
 import java.util.List;
 
-/**
- * A simple data class to hold information about a single travel package.
- */
 public class PackageInfo {
     private final String name;
     private final List<String> features;

@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -20,9 +19,6 @@ public class AdminAdd extends JFrame {
     private static final Font FIELD_FONT = new Font("Segoe UI", Font.PLAIN, 19);
 
     AdminAdd() {
-        // Frame Layout
-        // This frame should not exit the app, but rather be disposed on close.
-        // The UserData frame will handle closing or going back.
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(510, 400);
@@ -33,18 +29,15 @@ public class AdminAdd extends JFrame {
         c.setLayout(null);
         c.setBackground(BACKGROUND_COLOR);
 
-        // Icon
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Title
         JLabel titleLabel = new JLabel();
         titleLabel.setText("Enter Information");
         titleLabel.setBounds(100, 25, 500, 50);
         titleLabel.setFont(TITLE_FONT);
         c.add(titleLabel);
 
-        // User Name
         JLabel userNameLabel = new JLabel();
         userNameLabel.setText("User Name");
         userNameLabel.setBounds(45, 75, 500, 50);
@@ -56,7 +49,6 @@ public class AdminAdd extends JFrame {
         userNameField.setFont(FIELD_FONT);
         c.add(userNameField);
 
-        // Email
         JLabel emailLabel = new JLabel();
         emailLabel.setText("Email");
         emailLabel.setBounds(45, 110, 500, 50);
@@ -68,7 +60,6 @@ public class AdminAdd extends JFrame {
         emailField.setFont(FIELD_FONT);
         c.add(emailField);
 
-        // Password
         JLabel passwordLabel = new JLabel();
         passwordLabel.setText("Password");
         passwordLabel.setBounds(45, 145, 500, 50);
@@ -81,7 +72,6 @@ public class AdminAdd extends JFrame {
         passwordField.setEchoChar('*');
         c.add(passwordField);
 
-        // Question
         JLabel questionLabel = new JLabel();
         questionLabel.setText("Question");
         questionLabel.setBounds(45, 180, 500, 50);
@@ -97,7 +87,6 @@ public class AdminAdd extends JFrame {
         securityQuestionComboBox.setBackground(Color.white);
         c.add(securityQuestionComboBox);
 
-        // Answer
         JLabel answerLabel = new JLabel();
         answerLabel.setText("Answer");
         answerLabel.setBounds(45, 215, 500, 50);
@@ -109,10 +98,8 @@ public class AdminAdd extends JFrame {
         answerField.setFont(FIELD_FONT);
         c.add(answerField);
 
-        // Cursor for JButtons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
         JButton backButton = new JButton("Back");
         backButton.setBounds(51, 280, 183, 50);
         backButton.setFont(BUTTON_FONT);
@@ -129,14 +116,12 @@ public class AdminAdd extends JFrame {
         addButton.setBackground(BUTTON_COLOR);
         c.add(addButton);
 
-        // Back Button
         backButton.addActionListener(ae -> {
             setVisible(false);
             new UserData().setVisible(true);
             dispose();
         });
 
-        // Add Button
         addButton.addActionListener(ae -> {
             String userName = userNameField.getText().toLowerCase();
             String email = emailField.getText();
@@ -155,7 +140,6 @@ public class AdminAdd extends JFrame {
                 AuthService.addUserByAdmin(userName, password, email, question, answer);
                 JOptionPane.showMessageDialog(null, "User has been added.", "User Added",
                         JOptionPane.INFORMATION_MESSAGE);
-                // Go back to the user list, which should be refreshed.
                 setVisible(false);
                 new UserData().setVisible(true);
                 dispose();

@@ -11,6 +11,11 @@ public class Admin extends JFrame {
     private static final Font TITLE_FONT = new Font("Tahoma", Font.BOLD, 60);
     private static final Font BUTTON_FONT = new Font("Segoe UI Black", Font.PLAIN, 25);
 
+    private JButton userDataButton;
+    private JButton adminPasswordButton;
+    private JButton exitButton;
+    private JButton backButton;
+
     Admin() {
         setupFrame();
         initComponents();
@@ -30,10 +35,8 @@ public class Admin extends JFrame {
     }
 
     private void initComponents() {
-        // Cursor for JButtons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
         userDataButton = new JButton("User Data");
         userDataButton.setFont(BUTTON_FONT);
         userDataButton.setCursor(cursor);
@@ -64,11 +67,9 @@ public class Admin extends JFrame {
         c.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Insets for padding
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Logo
         ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Admin.png")));
         JLabel imgLabel = new JLabel(logo);
         gbc.gridx = 0;
@@ -77,7 +78,6 @@ public class Admin extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         c.add(imgLabel);
 
-        // Title
         JLabel titleLabel = new JLabel();
         titleLabel.setText("Admin Panel");
         titleLabel.setFont(TITLE_FONT);
@@ -85,28 +85,23 @@ public class Admin extends JFrame {
         gbc.gridy = 1;
         c.add(titleLabel, gbc);
 
-        // User Data Button
         gbc.gridy = 2;
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         c.add(userDataButton, gbc);
 
-        // Admin Password Button
         gbc.gridx = 1;
         c.add(adminPasswordButton, gbc);
 
-        // Exit Button
         gbc.gridy = 3;
         gbc.gridx = 0;
         c.add(exitButton, gbc);
 
-        // Back Button
         gbc.gridx = 1;
         c.add(backButton, gbc);
     }
 
     private void addListeners() {
-        // User Data
         userDataButton.addActionListener(ae -> {
             new UserData().setVisible(true);
             setVisible(false);

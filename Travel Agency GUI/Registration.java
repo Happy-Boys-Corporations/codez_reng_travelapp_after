@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 import java.util.Random;
 import java.util.Objects;
 import java.io.IOException;
@@ -29,7 +28,6 @@ public class Registration extends JFrame {
     private static final Font CAPTCHA_FONT = new Font("Segoe UI", Font.PLAIN, 25);
 
     Registration() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -40,24 +38,20 @@ public class Registration extends JFrame {
         c.setLayout(null);
         c.setBackground(BACKGROUND_COLOR);
 
-        // Icon
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Logo
         ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/LogoBlue.png")));
         JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 50, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Title
         JLabel titleLabel = new JLabel();
         titleLabel.setText("Enter Your Information");
         titleLabel.setBounds(430, 25, 500, 50);
         titleLabel.setFont(TITLE_FONT);
         c.add(titleLabel);
 
-        // User Name
         JLabel userNameLabel = new JLabel();
         userNameLabel.setText("User Name");
         userNameLabel.setBounds(430, 75, 500, 50);
@@ -69,7 +63,6 @@ public class Registration extends JFrame {
         userNameField.setFont(FIELD_FONT);
         c.add(userNameField);
 
-        // Email
         JLabel emailLabel = new JLabel();
         emailLabel.setText("Email");
         emailLabel.setBounds(430, 110, 500, 50);
@@ -81,7 +74,6 @@ public class Registration extends JFrame {
         emailField.setFont(FIELD_FONT);
         c.add(emailField);
 
-        // Password
         JLabel passwordLabel = new JLabel();
         passwordLabel.setText("Password");
         passwordLabel.setBounds(430, 145, 500, 50);
@@ -94,7 +86,6 @@ public class Registration extends JFrame {
         passwordField.setEchoChar('*');
         c.add(passwordField);
 
-        // Question
         JLabel questionLabel = new JLabel();
         questionLabel.setText("Question");
         questionLabel.setBounds(430, 180, 500, 50);
@@ -110,7 +101,6 @@ public class Registration extends JFrame {
         securityQuestionComboBox.setBackground(Color.white);
         c.add(securityQuestionComboBox);
 
-        // Answer
         JLabel answerLabel = new JLabel();
         answerLabel.setText("Answer");
         answerLabel.setBounds(430, 215, 500, 50);
@@ -122,7 +112,6 @@ public class Registration extends JFrame {
         answerField.setFont(FIELD_FONT);
         c.add(answerField);
 
-        // Captcha Label and Text Field
         JLabel captchaLabel = new JLabel();
         captchaLabel.setText("Captcha");
         captchaLabel.setBounds(430, 250, 500, 50);
@@ -134,12 +123,10 @@ public class Registration extends JFrame {
         captchaField.setFont(FIELD_FONT);
         c.add(captchaField);
 
-        // To get a random number for captcha
         Random rand = new Random();
         captchaA = rand.nextInt(10);
         captchaB = rand.nextInt(10);
 
-        // Captcha
         JLabel captchaValueLabel = new JLabel();
         captchaValueLabel.setText(" " + captchaA + " + " + captchaB + " ");
         captchaValueLabel.setBounds(530, 260, 75, 30);
@@ -149,10 +136,8 @@ public class Registration extends JFrame {
         captchaValueLabel.setOpaque(true);
         c.add(captchaValueLabel);
 
-        // Cursor for JButtons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
         JButton exitButton = new JButton("Exit");
         exitButton.setBounds(53, 325, 183, 50);
         exitButton.setFont(BUTTON_FONT);
@@ -185,17 +170,14 @@ public class Registration extends JFrame {
         registerButton.setBackground(BUTTON_COLOR);
         c.add(registerButton);
 
-        // Exit Button
         exitButton.addActionListener(ae -> System.exit(0));
 
-        // Back Button
         backButton.addActionListener(ae -> {
             setVisible(false);
             new Home().setVisible(true);
             dispose();
         });
 
-        // Reset Button
         resetButton.addActionListener(ae -> {
             userNameField.setText("");
             emailField.setText("");
@@ -205,7 +187,6 @@ public class Registration extends JFrame {
             securityQuestionComboBox.setSelectedIndex(0);
         });
 
-        // Register Button
         registerButton.addActionListener(ae -> registerUser());
     }
 

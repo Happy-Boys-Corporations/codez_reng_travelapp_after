@@ -16,7 +16,6 @@ public class DomPlaces extends JFrame {
     private DomesticDestination selectedPlace = DomesticDestination.NONE;
 
     DomPlaces() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -30,7 +29,6 @@ public class DomPlaces extends JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(icon.getImage());
 
-        // Logo
         ImageIcon logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
         JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 50, logo.getIconWidth(), logo.getIconHeight());
@@ -40,10 +38,8 @@ public class DomPlaces extends JFrame {
         Font f2 = new Font("Segoe UI Semibold", Font.PLAIN, 20);
         Font f3 = new Font("Segoe UI Black", Font.PLAIN, 25);
 
-        // Cursor for JButtons and Radio Buttons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // Title
         JLabel label1 = new JLabel();
         label1.setText("Which Place Would You");
         label1.setBounds(430, 25, 500, 50);
@@ -56,7 +52,6 @@ public class DomPlaces extends JFrame {
         label1.setFont(f1);
         c.add(label1);
 
-        // Country JButtons
         JRadioButton place1 = new JRadioButton("Cox's Bazar");
         place1.setBounds(460, 100, 200, 50);
         place1.setFont(f2);
@@ -92,7 +87,6 @@ public class DomPlaces extends JFrame {
         place5.setCursor(cursor);
         c.add(place5);
 
-        // To Group JButtons
         ButtonGroup jButtonGroup = new ButtonGroup();
         jButtonGroup.add(place1);
         jButtonGroup.add(place2);
@@ -131,15 +125,12 @@ public class DomPlaces extends JFrame {
         place4.addActionListener(handler);
         place5.addActionListener(handler);
 
-        // Action Listener for JButtons
-        // Exit Button
         btn1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 System.exit(0);
             }
         });
 
-        // Back Button
         btn2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 DefPackTypes frame = new DefPackTypes();
@@ -148,7 +139,6 @@ public class DomPlaces extends JFrame {
             }
         });
 
-        // Next Button
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 Destination dest = null;

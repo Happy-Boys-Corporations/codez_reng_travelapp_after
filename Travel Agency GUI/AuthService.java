@@ -6,23 +6,12 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
-/**
- * A service class to handle all authentication and user data management.
- * This centralizes file I/O and password handling, removing it from UI classes.
- */
 public class AuthService {
 
     private static final Path USER_DATA_PATH = Paths.get("Data", "user_data.txt");
     private static final Path ADMIN_DATA_PATH = Paths.get("Data", "admin_data.txt");
 
-    // --- Password Hashing ---
-
-    /**
-     * Hashes a password using SHA-256.
-     * NOTE: For a production environment, a stronger, salted hashing algorithm like BCrypt or Argon2 is essential.
-     */
     private static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -41,15 +30,10 @@ public class AuthService {
         }
     }
 
-    /**
-     * Verifies a plain-text password against a stored hash.
-     */
     private static boolean verifyPassword(String plainPassword, String hashedPassword) {
         String hashOfPlainPassword = hashPassword(plainPassword);
         return hashOfPlainPassword.equals(hashedPassword);
     }
-
-    // --- User Authentication and Registration ---
 
     public static boolean authenticateUser(String username, String password) throws IOException {
         if (!Files.exists(USER_DATA_PATH)) return false;
@@ -84,7 +68,7 @@ public class AuthService {
             String timeAndDate = myDateObj.format(myFormatObj);
 
             pw.println("User Name : " + userName);
-            pw.println("Password : " + hashedPassword); // Store the hash, not the plain password
+            pw.println("Password : " + hashedPassword);
             pw.println("Email : " + email);
             pw.println("Security Question : " + question);
             pw.println("Answer : " + answer);
@@ -93,11 +77,8 @@ public class AuthService {
         }
     }
 
-    // --- Admin Authentication and Management ---
-
     public static boolean authenticateAdmin(String username, String password) throws IOException {
         if (!Files.exists(ADMIN_DATA_PATH)) {
-            // If the admin file doesn't exist, create it with default credentials for first-time use.
             updateAdminCredentials("admin", "admin");
             return username.equalsIgnoreCase("admin") && password.equals("admin");
         }
@@ -126,7 +107,7 @@ public class AuthService {
             writer.newLine();
             writer.write("Name : " + name);
             writer.newLine();
-            writer.write("Password : " + hashedPassword); // Store the hash
+            writer.write("Password : " + hashedPassword);
             writer.newLine();
             writer.write("==========================================");
             writer.newLine();
@@ -152,7 +133,7 @@ public class AuthService {
 
             pw.println("             ## Added by Admin ##");
             pw.println("User Name : " + userName);
-            pw.println("Password : " + hashedPassword); // Store the hash
+            pw.println("Password : " + hashedPassword);
             pw.println("Email : " + email);
             pw.println("Security Question : " + question);
             pw.println("Answer : " + answer);

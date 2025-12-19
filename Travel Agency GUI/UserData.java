@@ -1,8 +1,8 @@
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.io.*;
 import java.nio.file.*;
@@ -15,7 +15,6 @@ public class UserData extends JFrame {
     private static final String[] COLUMN_NAMES = { "User Name", "Password", "Email", "Security Question", "Answer", "Date and Time" };
 
     UserData() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(700, 600);
@@ -26,26 +25,21 @@ public class UserData extends JFrame {
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Fonts
         Font titleFont = new Font("Segoe UI Black", Font.BOLD, 60);
         Font buttonFont = new Font("Segoe UI Black", Font.PLAIN, 25);
         Font tableFont = new Font("Segoe UI", Font.PLAIN, 20);
 
-        // Cursor for JButtons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // Title
         JLabel titleLabel = new JLabel();
         titleLabel.setText("User Data");
         titleLabel.setBounds(200, 10, 400, 80);
         titleLabel.setFont(titleFont);
         c.add(titleLabel);
 
-        // JButtons
         JButton refreshButton = new JButton("Refresh");
         refreshButton.setBounds(54, 418, 184, 50);
         refreshButton.setFont(buttonFont);
@@ -86,7 +80,6 @@ public class UserData extends JFrame {
         backButton.setBackground(Color.decode("#2E75B6"));
         c.add(backButton);
 
-        // JTable Layout
         table = new JTable();
         model = new DefaultTableModel();
         model.setColumnIdentifiers(COLUMN_NAMES);
@@ -111,10 +104,8 @@ public class UserData extends JFrame {
 
         loadUsersIntoTable();
 
-        // Refresh Button
         refreshButton.addActionListener(ae -> refreshTable());
 
-        // Delete Button
         deleteButton.addActionListener(ae -> {
             if (table.getSelectionModel().isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please select a user to delete", "Warning!",
@@ -126,7 +117,7 @@ public class UserData extends JFrame {
                 int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete user '" + userToDelete + "'?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION) {
                     try {
-                        UserDataManager.deleteUser(userToDelete);
+                        UserDataManager.deleteUser(selectedRow);
                         model.removeRow(selectedRow);
                         JOptionPane.showMessageDialog(null, "User '" + userToDelete + "' has been deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } catch (IOException ex) {
@@ -137,17 +128,14 @@ public class UserData extends JFrame {
             }
         });
 
-        // Add Button
         addButton.addActionListener(ae -> {
             setVisible(false);
             new AdminAdd().setVisible(true);
             dispose();
         });
 
-        // Exit Button
         exitButton.addActionListener(ae -> System.exit(0));
 
-        // Back Button
         backButton.addActionListener(ae -> {
             setVisible(false);
             new Admin().setVisible(true);
@@ -172,14 +160,7 @@ public class UserData extends JFrame {
         loadUsersIntoTable();
     }
 
-    /**
-     * Inner class to handle all data access logic for user data.
-     * This separates file I/O from the UI code.
-     */
     private static class UserDataManager {
-        /**
-         * Represents a single user's data block from the text file.
-         */
         private static class UserRecord {
             final List<String> lines;
             final String userName;
@@ -283,15 +264,11 @@ public class UserData extends JFrame {
             return readAllRecords().stream().map(UserRecord::toTableRow).collect(Collectors.toList());
         }
 
-        public static void deleteUser(String userNameToDelete) throws IOException {
+        public static void deleteUser(int index) throws IOException {
             List<UserRecord> allRecords = readAllRecords();
-            List<UserRecord> recordsToKeep = allRecords.stream()
-                    .filter(record -> record.getUserName() != null && !record.getUserName().equals(userNameToDelete))
-                    .collect(Collectors.toList());
-
-            // Only write if a change was actually made
-            if (recordsToKeep.size() < allRecords.size()) {
-                writeAllRecords(recordsToKeep);
+            if (index >= 0 && index < allRecords.size()) {
+                allRecords.remove(index);
+                writeAllRecords(allRecords);
             }
         }
     }

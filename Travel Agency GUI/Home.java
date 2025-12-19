@@ -12,7 +12,6 @@ public class Home extends JFrame {
     private Cursor cursor;
 
     Home() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -23,21 +22,17 @@ public class Home extends JFrame {
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
         icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(icon.getImage());
 
-        // Logo
         logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
         imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 82, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Fonts
         f1 = new Font("Tahoma", Font.BOLD, 48);
         f2 = new Font("Segoe UI Black", Font.PLAIN, 25);
 
-        // Title
         label1 = new JLabel();
         label1.setText("Travel Anywhere");
         label1.setBounds(420, 55, 500, 65);
@@ -50,10 +45,8 @@ public class Home extends JFrame {
         label1.setFont(f1);
         c.add(label1);
 
-        // Cursor for JButtons
         cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
         btn1 = new JButton("Login");
         btn1.setBounds(418, 214, 195, 50);
         btn1.setFont(f2);
@@ -90,7 +83,6 @@ public class Home extends JFrame {
         nBtn.setBounds(0, 0, 0, 0);
         c.add(nBtn);
 
-        // Login
         btn1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
 
@@ -100,7 +92,6 @@ public class Home extends JFrame {
             }
         });
 
-        // Register
         btn2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
 
@@ -110,14 +101,12 @@ public class Home extends JFrame {
             }
         });
 
-        // Exit
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 System.exit(0);
             }
         });
 
-        // Admin Login
         btn4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 setVisible(false);

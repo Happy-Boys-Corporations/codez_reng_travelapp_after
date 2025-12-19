@@ -16,7 +16,6 @@ public class Packs extends JFrame {
     private PackageType selectedPackageType = PackageType.NONE;
 
     Packs() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -30,7 +29,6 @@ public class Packs extends JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(icon.getImage());
 
-        // Logo
         ImageIcon logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
         JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 50, logo.getIconWidth(), logo.getIconHeight());
@@ -40,10 +38,8 @@ public class Packs extends JFrame {
         Font f2 = new Font("Segoe UI Semibold", Font.PLAIN, 30);
         Font f3 = new Font("Segoe UI Black", Font.PLAIN, 25);
 
-        // Cursor for JButtons and Radio Buttons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // Title
         JLabel label1 = new JLabel();
         label1.setText("Choose Your Package");
         label1.setBounds(425, 40, 500, 50);
@@ -70,7 +66,6 @@ public class Packs extends JFrame {
         selfChosenPacks.setBackground(Color.decode("#F2F2F2"));
         c.add(selfChosenPacks);
 
-        // Cursor for JButtons
         ButtonGroup jButtonGroup = new ButtonGroup();
         jButtonGroup.add(defPacks);
         jButtonGroup.add(selfChosenPacks);
@@ -103,14 +98,12 @@ public class Packs extends JFrame {
         defPacks.addActionListener(handler);
         selfChosenPacks.addActionListener(handler);
 
-        // Exit Button
         btn1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 System.exit(0);
             }
         });
 
-        // Back Button
         btn2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 setVisible(false);
@@ -119,7 +112,6 @@ public class Packs extends JFrame {
             }
         });
 
-        // Next Button
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if (selectedPackageType == PackageType.DEFAULT) {

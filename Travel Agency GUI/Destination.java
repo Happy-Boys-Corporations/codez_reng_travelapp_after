@@ -1,9 +1,5 @@
 import java.util.List;
 
-/**
- * A data class to hold all information for a travel destination,
- * including its name and a list of available packages.
- */
 public class Destination {
     private final String name;
     private final List<PackageInfo> packages;

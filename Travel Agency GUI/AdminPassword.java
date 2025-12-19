@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -10,7 +9,6 @@ public class AdminPassword extends JFrame {
     private final JPasswordField passwordField;
 
     AdminPassword() {
-        // Frame Layout
         this.setTitle("Change Admin Password");
         this.setSize(520, 400);
         this.setLocationRelativeTo(null);
@@ -21,17 +19,14 @@ public class AdminPassword extends JFrame {
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Fonts
         Font buttonFont = new Font("Segoe UI Black", Font.PLAIN, 25);
         Font titleFont = new Font("Segoe UI Black", Font.PLAIN, 40);
         Font labelFont = new Font("Segoe UI", Font.PLAIN, 30);
         Font fieldFont = new Font("Segoe UI", Font.PLAIN, 22);
 
-        // Title
         JLabel titleLabel1 = new JLabel();
         titleLabel1.setText("Change Admin Name");
         titleLabel1.setBounds(50, 5, 500, 90);
@@ -44,7 +39,6 @@ public class AdminPassword extends JFrame {
         titleLabel2.setFont(titleFont);
         c.add(titleLabel2);
 
-        // User Name
         JLabel nameLabel = new JLabel();
         nameLabel.setText("Name");
         nameLabel.setBounds(50, 140, 500, 50);
@@ -56,7 +50,6 @@ public class AdminPassword extends JFrame {
         nameField.setFont(fieldFont);
         c.add(nameField);
 
-        // Password
         JLabel passwordLabel = new JLabel();
         passwordLabel.setText("Password");
         passwordLabel.setBounds(50, 200, 500, 50);
@@ -69,10 +62,8 @@ public class AdminPassword extends JFrame {
         passwordField.setEchoChar('*');
         c.add(passwordField);
 
-        // Cursor for JButtons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
         JButton closeButton = new JButton("Close");
         closeButton.setBounds(31, 280, 208, 43);
         closeButton.setFont(buttonFont);
@@ -89,13 +80,11 @@ public class AdminPassword extends JFrame {
         changeButton.setBackground(Color.decode("#2E75B6"));
         c.add(changeButton);
 
-        // Close Button
         closeButton.addActionListener(ae -> {
             setVisible(false);
             dispose();
         });
 
-        // Change Button
         changeButton.addActionListener(ae -> {
             String newName = nameField.getText().toLowerCase();
             String newPassword = new String(passwordField.getPassword());

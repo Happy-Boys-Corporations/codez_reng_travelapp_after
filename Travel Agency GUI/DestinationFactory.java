@@ -1,10 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * A factory class to create pre-defined Destination objects.
- * This centralizes the data for all tour packages.
- */
 public class DestinationFactory {
 
     private static final String CURRENCY = "$";
@@ -74,6 +70,4 @@ public class DestinationFactory {
         List<PackageInfo> packages = createStandardInternationalPackages(3000, 1500, 1000);
         return new Destination("South Africa", packages, CURRENCY);
     }
-
-    // ... Add static methods for all other destinations (Sajek, Italy, Greece, etc.)
 }

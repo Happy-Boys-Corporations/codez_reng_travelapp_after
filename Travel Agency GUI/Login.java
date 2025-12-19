@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -18,7 +17,6 @@ public class Login extends JFrame {
     private static final Font FIELD_FONT = new Font("Segoe UI", Font.PLAIN, 22);
 
     Login() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -29,24 +27,20 @@ public class Login extends JFrame {
         c.setLayout(null);
         c.setBackground(BACKGROUND_COLOR);
 
-        // Icon
         ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Icon.png")));
         this.setIconImage(icon.getImage());
 
-        // Logo
         ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/LogoBlue.png")));
         JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 50, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Title
         JLabel titleLabel = new JLabel();
         titleLabel.setText("User Login");
         titleLabel.setBounds(450, 50, 500, 90);
         titleLabel.setFont(TITLE_FONT);
         c.add(titleLabel);
 
-        // User Name
         JLabel userNameLabel = new JLabel();
         userNameLabel.setText("User Name");
         userNameLabel.setBounds(430, 145, 500, 50);
@@ -58,7 +52,6 @@ public class Login extends JFrame {
         userNameField.setFont(FIELD_FONT);
         c.add(userNameField);
 
-        // Password
         JLabel passwordLabel = new JLabel();
         passwordLabel.setText("Password");
         passwordLabel.setBounds(430, 205, 500, 50);
@@ -71,10 +64,8 @@ public class Login extends JFrame {
         passwordField.setEchoChar('*');
         c.add(passwordField);
 
-        // Cursor for JButtons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // JButtons
         JButton exitButton = new JButton("Exit");
         exitButton.setBounds(90, 325, 215, 50);
         exitButton.setFont(BUTTON_FONT);
@@ -99,17 +90,14 @@ public class Login extends JFrame {
         loginButton.setBackground(BUTTON_COLOR);
         c.add(loginButton);
 
-        // Exit Button
         exitButton.addActionListener(ae -> System.exit(0));
 
-        // Back Button
         backButton.addActionListener(ae -> {
             setVisible(false);
             new Home().setVisible(true);
             dispose();
         });
 
-        // Login Button
         loginButton.addActionListener(ae -> {
             String userName = userNameField.getText().toLowerCase();
             String password = new String(passwordField.getPassword());

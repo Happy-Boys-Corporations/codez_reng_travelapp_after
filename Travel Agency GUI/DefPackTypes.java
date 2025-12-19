@@ -16,7 +16,6 @@ public class DefPackTypes extends JFrame {
     private TourType selectedTourType = TourType.NONE;
 
     DefPackTypes() {
-        // Frame Layout
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Travel Agency");
         this.setSize(900, 450);
@@ -27,32 +26,26 @@ public class DefPackTypes extends JFrame {
         c.setLayout(null);
         c.setBackground(Color.decode("#F2F2F2"));
 
-        // Icon
         ImageIcon icon = new ImageIcon(getClass().getResource("/images/Icon.png"));
         this.setIconImage(icon.getImage());
 
-        // Logo
         ImageIcon logo = new ImageIcon(getClass().getResource("/images/LogoBlue.png"));
         JLabel imgLabel = new JLabel(logo);
         imgLabel.setBounds(30, 50, logo.getIconWidth(), logo.getIconHeight());
         c.add(imgLabel);
 
-        // Fonts
         Font f1 = new Font("Segoe UI Black", Font.PLAIN, 40);
         Font f2 = new Font("Segoe UI Semibold", Font.PLAIN, 30);
         Font f3 = new Font("Segoe UI Black", Font.PLAIN, 25);
 
-        // Cursor for JButtons and Radio Buttons
         Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
 
-        // Title
         JLabel label1 = new JLabel();
         label1.setText("Choose Tour Type");
         label1.setBounds(460, 70, 500, 50);
         label1.setFont(f1);
         c.add(label1);
 
-        // International Radio Button
         international = new JRadioButton("International");
         international.setBounds(480, 140, 300, 50);
         international.setFont(f2);
@@ -60,7 +53,6 @@ public class DefPackTypes extends JFrame {
         international.setBackground(Color.decode("#F2F2F2"));
         c.add(international);
 
-        // Domestic Radio Button
         domestic = new JRadioButton("Domestic");
         domestic.setBounds(480, 200, 300, 50);
         domestic.setFont(f2);
@@ -68,12 +60,10 @@ public class DefPackTypes extends JFrame {
         domestic.setBackground(Color.decode("#F2F2F2"));
         c.add(domestic);
 
-        // To group radio buttons
         ButtonGroup radioButtonGroup = new ButtonGroup();
         radioButtonGroup.add(international);
         radioButtonGroup.add(domestic);
 
-        // Jbuttons
         JButton btn1 = new JButton("Exit");
         btn1.setBounds(90, 325, 215, 50);
         btn1.setFont(f3);
@@ -102,14 +92,12 @@ public class DefPackTypes extends JFrame {
         international.addActionListener(handler);
         domestic.addActionListener(handler);
 
-        // Exit Button
         btn1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 System.exit(0);
             }
         });
 
-        // Back Button
         btn2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 Packs frame = new Packs();
@@ -118,7 +106,6 @@ public class DefPackTypes extends JFrame {
             }
         });
 
-        // Next Button
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if (selectedTourType == TourType.INTERNATIONAL) {
